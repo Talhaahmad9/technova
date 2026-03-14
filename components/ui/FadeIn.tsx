@@ -1,5 +1,6 @@
 'use client';
 
+import React from 'react';
 import { motion, useInView } from 'framer-motion';
 import { useRef } from 'react';
 
@@ -11,7 +12,7 @@ interface FadeInProps {
   distance?: number;
   className?: string;
   once?: boolean;
-  as?: keyof JSX.IntrinsicElements;
+  as?: React.ElementType;
 }
 
 export function FadeIn({
