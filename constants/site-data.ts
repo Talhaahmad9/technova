@@ -79,6 +79,24 @@ export interface GalleryImage {
 
 // ── Meta ──────────────────────────────────────────────────────────────────────
 
+// ── Hero Background Images ────────────────────────────────────────────────────
+// Slideshow cycles through these in order. Add/remove/reorder freely.
+export const HERO_BG_IMAGES = [
+  // Only high-res images (250KB+).
+  // mobilePosition: CSS object-position value — controls which part of the
+  // image stays visible on portrait mobile screens.
+  {
+    src:            '/iobm-3.webp',
+    alt:            'IoBM College of Computer Science building',
+    mobilePosition: 'center top',    // keep building facade & signage in frame
+  },
+  {
+    src:            '/iobm-2.webp',
+    alt:            'IoBM students on campus',
+    mobilePosition: 'center 30%',    // keep students' faces in frame on portrait
+  },
+] as const;
+
 export const META = {
   siteName: "TechNova '26",
   siteNameShort: 'TechNova',

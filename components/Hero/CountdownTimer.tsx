@@ -37,14 +37,13 @@ interface TimeUnitProps {
 function TimeUnit({ value, unit }: TimeUnitProps) {
   return (
     <div className="flex flex-col items-center">
-      <div className="card-glass rounded-xl px-4 py-3" style={{ minWidth: 64, textAlign: 'center' }}>
-        {/*
-          suppressHydrationWarning: the server and client will always differ by
-          at least 1 second. This is intentional — we silence the warning here
-          and let the client take over on mount via the useEffect below.
-        */}
+      {/* px-2.5 sm:px-4 — tighter padding on mobile so 4 units fit in a row */}
+      <div
+        className="card-glass rounded-xl px-2.5 sm:px-4 py-2 sm:py-3"
+        style={{ minWidth: 44, textAlign: 'center' }}
+      >
         <span
-          className="font-mono text-3xl font-bold leading-none"
+          className="font-mono text-xl sm:text-3xl font-bold leading-none"
           style={{ color: 'var(--accent-glow)' }}
           suppressHydrationWarning
         >
@@ -52,7 +51,7 @@ function TimeUnit({ value, unit }: TimeUnitProps) {
         </span>
       </div>
       <span
-        className="text-xs font-mono uppercase tracking-widest mt-2"
+        className="text-[10px] sm:text-xs font-mono uppercase tracking-widest mt-1.5"
         style={{ color: 'var(--text-subtle)' }}
       >
         {unit}
@@ -64,7 +63,7 @@ function TimeUnit({ value, unit }: TimeUnitProps) {
 function Separator() {
   return (
     <span
-      className="font-mono text-2xl font-bold mt-3"
+      className="font-mono text-base sm:text-2xl font-bold mt-2 sm:mt-3"
       style={{ color: 'var(--text-subtle)' }}
     >
       :

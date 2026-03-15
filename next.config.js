@@ -8,6 +8,7 @@ const nextConfig = {
         pathname: '/**',
       },
     ],
+    // Local images in /public are served automatically — no config needed
   },
 };
 

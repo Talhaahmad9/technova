@@ -261,3 +261,29 @@ body::before {
   --grid-color:         rgba(126, 184, 212, 0.05);
   --scanline-color:     rgba(126, 184, 212, 0.015);
 }
+
+/* ── Hero background Ken Burns ───────────────────────────────────────────────
+   Mobile:  starts at 1.0 (fully zoomed out), drifts to 1.04
+            — small screens need to see the whole image, not a cropped zoom
+   Desktop: starts at 1.05, drifts to 1.0 (subtle zoom-out feel)
+   Duration matches INTERVAL_MS + TRANSITION_DURATION in HeroBgSlideshow.tsx
+───────────────────────────────────────────────────────────────────────────── */
+@keyframes kenBurnsMobile {
+  from { transform: scale(1.0);  }
+  to   { transform: scale(1.04); }
+}
+
+@keyframes kenBurnsDesktop {
+  from { transform: scale(1.06); }
+  to   { transform: scale(1.0);  }
+}
+
+.hero-bg-scale {
+  animation: kenBurnsMobile 8s linear forwards;
+}
+
+@media (min-width: 640px) {
+  .hero-bg-scale {
+    animation: kenBurnsDesktop 8s linear forwards;
+  }
+}
