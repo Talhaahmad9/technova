@@ -128,13 +128,13 @@ export const THEMES: Theme[] = [
   },
   {
     id: 'solar-flare',
-    label: 'Solar Flare',
-    description: 'Magenta fire on obsidian',
+    label: 'Nova Burst',
+    description: 'Electric violet + deep purple',
   },
   {
     id: 'obsidian-pearl',
-    label: 'Obsidian Pearl',
-    description: 'Warm gold on pure black',
+    label: 'Royal Void',
+    description: 'Rich indigo-cobalt precision',
   },
   {
     id: 'arctic-signal',
