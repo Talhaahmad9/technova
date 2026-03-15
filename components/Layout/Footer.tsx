@@ -1,6 +1,8 @@
 'use client';
 
-import { Zap, Instagram, Linkedin, Twitter, Github } from 'lucide-react';
+import Image from 'next/image';
+import { Instagram, Linkedin, Twitter, Github } from 'lucide-react';
+import { META } from '@/constants/site-data';
 import type { FooterLink, SocialLink } from '@/constants/site-data';
 
 interface FooterData {
@@ -33,12 +35,15 @@ export function Footer({ data, siteName }: FooterProps) {
 
           {/* Brand */}
           <div className="flex flex-col items-center md:items-start gap-2">
-            <div className="flex items-center gap-2">
-              <div
-                className="w-7 h-7 rounded-lg flex items-center justify-center"
-                style={{ background: 'var(--gradient-accent)' }}
-              >
-                <Zap size={14} className="text-white" />
+            <div className="flex items-center gap-2.5">
+              <div className="relative w-10 h-10 flex-shrink-0">
+                <Image
+                  src={META.logoPath}
+                  alt={siteName}
+                  fill
+                  className="object-contain"
+                  style={{ mixBlendMode: 'screen' }}
+                />
               </div>
               <span className="font-bold text-lg" style={{ color: 'var(--text-primary)' }}>
                 {siteName}

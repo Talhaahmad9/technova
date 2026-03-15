@@ -298,11 +298,10 @@ export const GALLERY = {
 export const PRIZE_POOL = {
   eyebrow: 'Compete & Win',
   heading: 'Total Prize Pool',
-  amount: 'Rs. 3,00,000+',
+  amount: '500000',
   subtext: 'Across all competitions and categories',
   note: 'Winners also receive internship referrals, mentorship sessions, and certificates of excellence.',
   highlight: [
-    { label: 'Cash Prizes',          value: 'PKR 3,00,000+' },
     { label: 'Competitions',         value: '12+'           },
     { label: 'Winning Teams',        value: '20+'           },
   ],
@@ -559,7 +558,7 @@ export const LOCATION = {
     'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3619.8!2d67.1!3d24.8!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zSW9CTQ!5e0!3m2!1sen!2spk!4v1',
   cta: {
     heading: 'Ready to Make History?',
-    body: 'Registrations are limited to 500 participants. Secure your spot before the deadline.',
+    body: 'Join us for an unforgettable 48 hours of innovation, collaboration, and competition.',
     buttonLabel: 'Register Now — Free',
     buttonHref: '/register',
     note: 'Registration is free for all IoBM students. External participants: PKR 500.',
@@ -568,7 +567,6 @@ export const LOCATION = {
     { icon: 'Calendar', label: 'Date',       value: 'March 15–17, 2026'   },
     { icon: 'Clock',    label: 'Start Time', value: '9:00 AM Sharp'        },
     { icon: 'MapPin',   label: 'Venue',      value: 'IoBM, Karachi'        },
-    { icon: 'Users',    label: 'Capacity',   value: '500 Participants'     },
   ],
 } as const;
 
@@ -759,7 +757,7 @@ export const DASHBOARD = {
 
 export const REGISTRATION = {
   pageTitle:    'Register for TechNova',
-  pageSubtitle: 'Secure your spot. Limited to 500 participants.',
+  pageSubtitle: 'Fill in the form below to register for TechNova.',
 
   // ── How did you hear about us options ──────────────────────────────────────
   referralOptions: [

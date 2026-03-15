@@ -1,7 +1,7 @@
 'use client';
 
-import { motion, useInView } from 'framer-motion';
-import { useRef } from 'react';
+import { motion, useInView, useMotionValue, useTransform, animate } from 'framer-motion';
+import { useRef, useEffect } from 'react';
 import { Trophy } from 'lucide-react';
 import { SectionWrapper } from '@/components/ui/SectionWrapper';
 import { SectionEyebrow } from '@/components/ui/SectionEyebrow';
@@ -10,56 +10,55 @@ import type { PRIZE_POOL } from '@/constants/site-data';
 
 type PrizePoolData = typeof PRIZE_POOL;
 
-function AnimatedAmount({ value }: { value: string }) {
-  const ref = useRef<HTMLDivElement>(null);
-  const isInView = useInView(ref, { once: true });
+// ── Rolling number counter ─────────────────────────────────────────────────
 
-  // Split "Rs. 3,00,000+" into currency label + number
-  // so we can size them differently on one line
-  const parts = value.match(/^(Rs\.)\s*(.+)$/) ?? [value, '', value];
-  const currency = parts[1]; // "Rs."
-  const amount   = parts[2]; // "3,00,000+"
+function RollingCounter({ target }: { target: number }) {
+  const ref        = useRef<HTMLSpanElement>(null);
+  const isInView   = useInView(ref, { once: true, margin: '-60px' });
+  const motionVal  = useMotionValue(0);
+  const rounded    = useTransform(motionVal, (v) => Math.floor(v).toLocaleString('en-US'));
+
+  useEffect(() => {
+    if (!isInView) return;
+    const ctrl = animate(motionVal, target, {
+      duration: 2.5,
+      ease:     [0.16, 1, 0.3, 1], // expo-out — fast early, slow landing
+    });
+    return ctrl.stop;
+  }, [isInView, motionVal, target]);
+
+  // Subscribe to rounded and update DOM directly for perf
+  useEffect(() => {
+    return rounded.on('change', (v) => {
+      if (ref.current) ref.current.textContent = v;
+    });
+  }, [rounded]);
 
   return (
-    <motion.div
+    <span
       ref={ref}
-      className="flex items-baseline gap-2 flex-wrap justify-center md:justify-start"
-      initial={{ opacity: 0, y: 16 }}
-      animate={isInView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.7, ease: [0.25, 0.46, 0.45, 0.94], delay: 0.15 }}
+      className="mono font-bold tabular-nums"
+      style={{
+        fontSize:             'clamp(2rem, 7vw, 4.5rem)',
+        lineHeight:           1,
+        background:           'var(--gradient-accent)',
+        WebkitBackgroundClip: 'text',
+        WebkitTextFillColor:  'transparent',
+        backgroundClip:       'text',
+        filter:               'drop-shadow(0 0 24px var(--accent-glow))',
+      }}
     >
-      {/* "Rs." — smaller, muted */}
-      <span
-        className="mono font-semibold"
-        style={{
-          fontSize: 'clamp(1rem, 3vw, 1.8rem)',
-          color: 'var(--accent-primary)',
-          lineHeight: 1,
-        }}
-      >
-        {currency}
-      </span>
-      {/* Amount — big gradient number */}
-      <span
-        className="mono font-bold"
-        style={{
-          fontSize: 'clamp(2rem, 7vw, 4.5rem)',
-          lineHeight: 1,
-          background: 'var(--gradient-accent)',
-          WebkitBackgroundClip: 'text',
-          WebkitTextFillColor: 'transparent',
-          backgroundClip: 'text',
-          filter: 'drop-shadow(0 0 24px var(--accent-glow))',
-          whiteSpace: 'nowrap',
-        }}
-      >
-        {amount}
-      </span>
-    </motion.div>
+      0
+    </span>
   );
 }
 
+// ── Section ────────────────────────────────────────────────────────────────
+
 export function PrizePoolSection({ data }: { data: PrizePoolData }) {
+  // Parse numeric target from amount string e.g. "300000"
+  const numericTarget = parseInt((data.amount as string).replace(/\D/g, ''), 10) || 300000;
+
   return (
     <SectionWrapper id="prize-pool" className="relative py-16 overflow-hidden" direction="up">
       <div className="absolute inset-0 pointer-events-none" style={{ background: 'var(--bg-surface)' }} />
@@ -78,10 +77,10 @@ export function PrizePoolSection({ data }: { data: PrizePoolData }) {
 
       <div className="relative max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
 
-        {/* Single row: trophy + content side by side on md+, stacked on mobile */}
+        {/* Trophy + content side by side */}
         <div className="flex flex-col md:flex-row items-center gap-8 md:gap-12">
 
-          {/* Left — trophy */}
+          {/* Trophy */}
           <FadeIn direction="right" className="flex-shrink-0">
             <motion.div
               className="w-16 h-16 md:w-20 md:h-20 rounded-2xl flex items-center justify-center"
@@ -93,17 +92,42 @@ export function PrizePoolSection({ data }: { data: PrizePoolData }) {
             </motion.div>
           </FadeIn>
 
-          {/* Right — text content */}
+          {/* Text */}
           <div className="flex flex-col items-center md:items-start gap-3 text-center md:text-left">
-            <FadeIn>
-              <SectionEyebrow text={data.eyebrow} />
-            </FadeIn>
+            <FadeIn><SectionEyebrow text={data.eyebrow} /></FadeIn>
             <FadeIn delay={0.1}>
               <h2 className="font-bold text-2xl md:text-3xl tracking-tight" style={{ color: 'var(--text-primary)' }}>
                 {data.heading}
               </h2>
             </FadeIn>
-            <AnimatedAmount value={data.amount} />
+
+            {/* Rs. + rolling number on one line */}
+            <FadeIn delay={0.15}>
+              <div className="flex items-baseline gap-2">
+                <span
+                  className="mono font-semibold"
+                  style={{
+                    fontSize: 'clamp(1rem, 3vw, 1.8rem)',
+                    color:    'var(--accent-primary)',
+                    lineHeight: 1,
+                  }}
+                >
+                  Rs.
+                </span>
+                <RollingCounter target={numericTarget} />
+                <span
+                  className="mono font-bold"
+                  style={{
+                    fontSize: 'clamp(1.5rem, 4vw, 3rem)',
+                    color:    'var(--accent-glow)',
+                    lineHeight: 1,
+                  }}
+                >
+                  +
+                </span>
+              </div>
+            </FadeIn>
+
             <FadeIn delay={0.25}>
               <p className="text-sm" style={{ color: 'var(--text-muted)' }}>
                 {data.subtext}
@@ -112,7 +136,7 @@ export function PrizePoolSection({ data }: { data: PrizePoolData }) {
           </div>
         </div>
 
-        {/* Highlight pills — compact row below */}
+        {/* Highlight pills */}
         <FadeIn delay={0.3} className="mt-8">
           <div className="flex flex-wrap items-center justify-center md:justify-start gap-3">
             {data.highlight.map((h, i) => (
