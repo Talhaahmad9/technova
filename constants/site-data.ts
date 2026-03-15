@@ -554,3 +554,166 @@ export const FOOTER = {
     { platform: 'GitHub',     href: '#', icon: 'Github'    },
   ] satisfies SocialLink[],
 } as const;
+
+// ─────────────────────────────────────────────────────────────────────────────
+// DASHBOARD DATA
+// All dashboard content lives here. Your teammate only edits THIS section.
+// Never touch anything above this line.
+// ─────────────────────────────────────────────────────────────────────────────
+
+export interface Registration {
+  id: string;
+  name: string;
+  email: string;
+  team: string;
+  competition: string;
+  status: 'Confirmed' | 'Pending' | 'Waitlisted';
+  registeredAt: string;
+}
+
+export interface CompetitionStat {
+  id: string;
+  category: string;
+  registered: number;
+  capacity: number;
+  icon: string;
+}
+
+export interface Announcement {
+  id: string;
+  title: string;
+  body: string;
+  audience: 'All' | 'Participants' | 'Faculty' | 'Sponsors';
+  sentAt: string;
+  status: 'Sent' | 'Draft' | 'Scheduled';
+}
+
+export interface SponsorEntry {
+  id: string;
+  name: string;
+  contactName: string;
+  contactEmail: string;
+  status: 'Confirmed' | 'In Discussion' | 'Pending Invoice';
+  amount: string;
+}
+
+export interface ChartDataPoint {
+  label: string;
+  value: number;
+}
+
+// ── Dashboard Meta ─────────────────────────────────────────────────────────
+
+export const DASHBOARD = {
+  title: "TechNova '26 — Admin Dashboard",
+  welcomeMessage: "Welcome back, Organizer",
+  eventName: META.siteName,
+
+  // ── Overview Stats ────────────────────────────────────────────────────────
+  overviewStats: [
+    { id: 'os-1', value: '347',  label: 'Total Registrations', trend: '+12% this week',  trendUp: true,  icon: 'Users'     },
+    { id: 'os-2', value: '6',    label: 'Competitions Open',   trend: '2 closing soon',  trendUp: false, icon: 'Trophy'    },
+    { id: 'os-3', value: '8',    label: 'Sponsors Confirmed',  trend: '3 in discussion', trendUp: true,  icon: 'Handshake' },
+    { id: 'os-4', value: '21',   label: 'Days Until Event',    trend: 'March 15, 2026',  trendUp: true,  icon: 'Calendar'  },
+  ],
+
+  // ── Registrations ─────────────────────────────────────────────────────────
+  registrations: {
+    heading: 'Recent Registrations',
+    totalLabel: 'Total registered',
+    total: 347,
+    capacity: 500,
+    entries: [
+      { id: 'r-1', name: 'Ahmed Raza',      email: 'ahmed@iqra.edu.pk',   team: 'ByteForce',   competition: 'DSA Throwdown',       status: 'Confirmed',  registeredAt: '2026-02-28' },
+      { id: 'r-2', name: 'Sara Malik',      email: 'sara@szabist.edu.pk', team: 'PixelPush',   competition: 'UX Design Sprint',    status: 'Confirmed',  registeredAt: '2026-02-27' },
+      { id: 'r-3', name: 'Usman Tariq',     email: 'usman@iobm.edu.pk',   team: 'NullPtr',     competition: '48-Hour Build Sprint', status: 'Pending',    registeredAt: '2026-02-27' },
+      { id: 'r-4', name: 'Hira Baig',       email: 'hira@nust.edu.pk',    team: 'LaunchPad',   competition: 'Startup Pitch Battle', status: 'Confirmed',  registeredAt: '2026-02-26' },
+      { id: 'r-5', name: 'Bilal Siddiqui',  email: 'bilal@fast.edu.pk',   team: 'Kernel Panic','competition': 'DSA Throwdown',      status: 'Waitlisted', registeredAt: '2026-02-25' },
+      { id: 'r-6', name: 'Zainab Ahmed',    email: 'zainab@iba.edu.pk',   team: 'SolveIt',     competition: 'Social Impact',       status: 'Confirmed',  registeredAt: '2026-02-24' },
+    ] as Registration[],
+  },
+
+  // ── Competition Entries ───────────────────────────────────────────────────
+  competitionStats: {
+    heading: 'Competition Entries',
+    subheading: 'Registrations per category vs. capacity',
+    entries: [
+      { id: 'cs-1', category: 'DSA Throwdown',        registered: 89,  capacity: 100, icon: 'Code2'      },
+      { id: 'cs-2', category: '48-Hour Build Sprint',  registered: 72,  capacity: 80,  icon: 'Zap'        },
+      { id: 'cs-3', category: 'UX Design Sprint',      registered: 54,  capacity: 60,  icon: 'Figma'      },
+      { id: 'cs-4', category: 'Visual Identity',       registered: 38,  capacity: 50,  icon: 'Palette'    },
+      { id: 'cs-5', category: 'Startup Pitch Battle',  registered: 61,  capacity: 80,  icon: 'TrendingUp' },
+      { id: 'cs-6', category: 'Social Impact',         registered: 33,  capacity: 50,  icon: 'Globe'      },
+    ] as CompetitionStat[],
+  },
+
+  // ── Analytics ─────────────────────────────────────────────────────────────
+  analytics: {
+    heading: 'Registration Trend',
+    subheading: 'Daily sign-ups over the past 2 weeks',
+    dailyData: [
+      { label: 'Feb 15', value: 12  },
+      { label: 'Feb 16', value: 18  },
+      { label: 'Feb 17', value: 9   },
+      { label: 'Feb 18', value: 24  },
+      { label: 'Feb 19', value: 31  },
+      { label: 'Feb 20', value: 28  },
+      { label: 'Feb 21', value: 19  },
+      { label: 'Feb 22', value: 42  },
+      { label: 'Feb 23', value: 38  },
+      { label: 'Feb 24', value: 27  },
+      { label: 'Feb 25', value: 33  },
+      { label: 'Feb 26', value: 51  },
+      { label: 'Feb 27', value: 44  },
+      { label: 'Feb 28', value: 36  },
+    ] as ChartDataPoint[],
+    universityData: [
+      { label: 'IoBM',    value: 89  },
+      { label: 'FAST',    value: 74  },
+      { label: 'NUST',    value: 61  },
+      { label: 'SZABIST', value: 48  },
+      { label: 'IQRA',    value: 39  },
+      { label: 'Others',  value: 36  },
+    ] as ChartDataPoint[],
+  },
+
+  // ── Sponsors ──────────────────────────────────────────────────────────────
+  sponsorManagement: {
+    heading: 'Sponsor Pipeline',
+    subheading: 'Track confirmed and prospective sponsors',
+    entries: [
+      { id: 'sm-1', name: 'Acme Technologies', contactName: 'Kamran Shah',   contactEmail: 'kamran@acme.com',    status: 'Confirmed',        amount: 'PKR 200,000' },
+      { id: 'sm-2', name: 'NexaCloud',         contactName: 'Aisha Mirza',   contactEmail: 'aisha@nexacloud.io', status: 'Confirmed',        amount: 'PKR 150,000' },
+      { id: 'sm-3', name: 'Devforge',          contactName: 'Tariq Mehmood', contactEmail: 'tariq@devforge.pk', status: 'In Discussion',    amount: 'PKR 100,000' },
+      { id: 'sm-4', name: 'Stackline',         contactName: 'Omar Farhan',   contactEmail: 'omar@stackline.io', status: 'Pending Invoice',  amount: 'PKR 75,000'  },
+      { id: 'sm-5', name: 'Bitlabs',           contactName: 'Sana Qureshi',  contactEmail: 'sana@bitlabs.pk',  status: 'In Discussion',    amount: 'PKR 50,000'  },
+    ] as SponsorEntry[],
+  },
+
+  // ── Team Panel ────────────────────────────────────────────────────────────
+  teamPanel: {
+    heading: 'Organizing Team',
+    subheading: 'Current task status per organizer',
+    tasks: [
+      { memberId: 's-1', memberName: 'Omar Farooq',    role: 'Lead Organizer',   task: 'Finalize event schedule',        taskStatus: 'In Progress' as const },
+      { memberId: 's-2', memberName: 'Zara Ahmed',     role: 'Head of Design',   task: 'Deliver final banner assets',    taskStatus: 'Pending'     as const },
+      { memberId: 's-3', memberName: 'Ali Raza',       role: 'Head of Tech',     task: 'Deploy registration form',       taskStatus: 'Done'        as const },
+      { memberId: 's-4', memberName: 'Sara Khan',      role: 'Head of Marketing', task: 'Launch Instagram campaign',     taskStatus: 'In Progress' as const },
+      { memberId: 's-5', memberName: 'Bilal Chaudhry', role: 'Sponsorship Lead', task: 'Follow up with 3 sponsors',      taskStatus: 'Pending'     as const },
+      { memberId: 's-6', memberName: 'Hina Javed',     role: 'Logistics Lead',   task: 'Confirm venue AV setup',         taskStatus: 'Done'        as const },
+    ],
+  },
+
+  // ── Announcements ─────────────────────────────────────────────────────────
+  announcements: {
+    heading: 'Announcements',
+    subheading: 'Broadcast messages to participants, faculty, or sponsors',
+    entries: [
+      { id: 'an-1', title: 'Registration Now Open!',        body: 'TechNova \'26 registrations are officially open. Head to the website and secure your spot.',                     audience: 'All',          sentAt: '2026-02-20', status: 'Sent'      },
+      { id: 'an-2', title: 'Sponsor Deck Available',        body: 'The official TechNova \'26 sponsorship deck is ready. Contact us to receive your copy.',                         audience: 'Sponsors',     sentAt: '2026-02-22', status: 'Sent'      },
+      { id: 'an-3', title: 'DSA Practice Resources',        body: 'Brushing up for the DSA Throwdown? We\'ve compiled a resource list on our website.',                             audience: 'Participants', sentAt: '2026-02-25', status: 'Sent'      },
+      { id: 'an-4', title: 'Faculty Briefing — March 1',    body: 'A briefing session for all faculty advisors is scheduled for March 1st at 3:00 PM in Room 204.',                 audience: 'Faculty',      sentAt: '2026-03-01', status: 'Scheduled' },
+      { id: 'an-5', title: 'Final Reminder — 1 Week Left',  body: 'One week to go! Make sure your team is registered and all submissions are in order.',                            audience: 'All',          sentAt: '',           status: 'Draft'     },
+    ] as Announcement[],
+  },
+} as const;

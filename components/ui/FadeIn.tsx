@@ -1,8 +1,8 @@
 'use client';
 
-import React from 'react';
 import { motion, useInView } from 'framer-motion';
 import { useRef } from 'react';
+import type { ElementType } from 'react';
 
 interface FadeInProps {
   children: React.ReactNode;
@@ -12,7 +12,7 @@ interface FadeInProps {
   distance?: number;
   className?: string;
   once?: boolean;
-  as?: React.ElementType;
+  as?: ElementType;
 }
 
 export function FadeIn({
@@ -23,7 +23,6 @@ export function FadeIn({
   distance = 24,
   className = '',
   once = true,
-  as = 'div',
 }: FadeInProps) {
   const ref = useRef<HTMLDivElement>(null);
   const isInView = useInView(ref, { once, margin: '-60px' });
@@ -36,14 +35,10 @@ export function FadeIn({
     ...(direction === 'right' && { x: -distance }),
   };
 
-  const animate = isInView
-    ? { opacity: 1, x: 0, y: 0 }
-    : initial;
-
-  const MotionTag = motion[as as 'div'] ?? motion.div;
+  const animate = isInView ? { opacity: 1, x: 0, y: 0 } : initial;
 
   return (
-    <MotionTag
+    <motion.div
       ref={ref}
       className={className}
       initial={initial}
@@ -51,11 +46,11 @@ export function FadeIn({
       transition={{ duration, ease: [0.25, 0.46, 0.45, 0.94], delay }}
     >
       {children}
-    </MotionTag>
+    </motion.div>
   );
 }
 
-// ── Stagger container — wraps children and staggers their FadeIn ──────────────
+// ── Stagger container ─────────────────────────────────────────────────────────
 
 interface StaggerProps {
   children: React.ReactNode;
@@ -64,7 +59,12 @@ interface StaggerProps {
   baseDelay?: number;
 }
 
-export function Stagger({ children, className = '', staggerDelay = 0.1, baseDelay = 0 }: StaggerProps) {
+export function Stagger({
+  children,
+  className = '',
+  staggerDelay = 0.1,
+  baseDelay = 0,
+}: StaggerProps) {
   const ref = useRef<HTMLDivElement>(null);
   const isInView = useInView(ref, { once: true, margin: '-60px' });
 
@@ -76,7 +76,9 @@ export function Stagger({ children, className = '', staggerDelay = 0.1, baseDela
       animate={isInView ? 'visible' : 'hidden'}
       variants={{
         hidden:  {},
-        visible: { transition: { staggerChildren: staggerDelay, delayChildren: baseDelay } },
+        visible: {
+          transition: { staggerChildren: staggerDelay, delayChildren: baseDelay },
+        },
       }}
     >
       {children}
@@ -84,7 +86,7 @@ export function Stagger({ children, className = '', staggerDelay = 0.1, baseDela
   );
 }
 
-// ── StaggerItem — must be a direct child of <Stagger> ────────────────────────
+// ── StaggerItem — direct child of <Stagger> ───────────────────────────────────
 
 interface StaggerItemProps {
   children: React.ReactNode;
@@ -93,7 +95,12 @@ interface StaggerItemProps {
   distance?: number;
 }
 
-export function StaggerItem({ children, className = '', direction = 'up', distance = 24 }: StaggerItemProps) {
+export function StaggerItem({
+  children,
+  className = '',
+  direction = 'up',
+  distance = 24,
+}: StaggerItemProps) {
   const hidden = {
     opacity: 0,
     ...(direction === 'up'    && { y:  distance }),
@@ -107,7 +114,9 @@ export function StaggerItem({ children, className = '', direction = 'up', distan
       variants={{
         hidden,
         visible: {
-          opacity: 1, x: 0, y: 0,
+          opacity: 1,
+          x: 0,
+          y: 0,
           transition: { duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] },
         },
       }}
