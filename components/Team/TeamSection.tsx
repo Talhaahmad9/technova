@@ -39,13 +39,13 @@ export function TeamSection({ data }: TeamSectionProps) {
         </FadeIn>
 
         <FadeIn delay={0.1} className="mb-16">
-          <MemberGrid members={data.faculty} heading={data.facultyHeading} variant="faculty" />
+          <MemberGrid members={data.students} heading={data.studentsHeading} variant="student" />
         </FadeIn>
 
         <div className="w-full h-px mb-16" style={{ background: 'var(--border-color)' }} />
 
         <FadeIn delay={0.15}>
-          <MemberGrid members={data.students} heading={data.studentsHeading} variant="student" />
+          <MemberGrid members={data.faculty} heading={data.facultyHeading} variant="faculty" />
         </FadeIn>
       </div>
     </SectionWrapper>

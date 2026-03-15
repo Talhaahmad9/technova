@@ -57,7 +57,7 @@ export function Navbar({ links, cta, siteName, logoPath, themes }: NavbarProps) 
             onClick={() => scrollTo('#hero')}
             aria-label="Go to top"
           >
-            <div className="relative w-9 h-9 flex-shrink-0">
+            <div className="relative w-14 h-14 flex-shrink-0">
               <Image
                 src={logoPath}
                 alt={`${siteName} logo`}
@@ -67,14 +67,9 @@ export function Navbar({ links, cta, siteName, logoPath, themes }: NavbarProps) 
                 priority
               />
             </div>
-            <div className="flex flex-col leading-none">
-              <span className="font-bold text-base tracking-tight" style={{ color: 'var(--text-primary)' }}>
-                {siteName}
-              </span>
-              <span className="mono text-[10px] uppercase tracking-[0.15em]" style={{ color: 'var(--accent-primary)' }}>
-                IoBM Hackathon
-              </span>
-            </div>
+            <span className="font-bold text-base tracking-tight" style={{ color: 'var(--text-primary)' }}>
+              {siteName}
+            </span>
           </motion.button>
 
           {/* Desktop nav */}

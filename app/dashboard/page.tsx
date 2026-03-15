@@ -2,7 +2,7 @@ import { DashboardClient } from '@/components/Dashboard/DashboardClient';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: "TechNova '26 — Admin Dashboard",
+  title: "TechNova — Admin Dashboard",
   description: 'Internal dashboard for TechNova event organizers.',
 };
 

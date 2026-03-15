@@ -1,5 +1,5 @@
 // ─────────────────────────────────────────────────────────────────────────────
-// TECHNOVA '26 — SINGLE SOURCE OF TRUTH
+// TECHNOVA — SINGLE SOURCE OF TRUTH
 // Every text string, label, link, and data object lives here.
 // NO hardcoded strings are allowed in components.
 // ─────────────────────────────────────────────────────────────────────────────
@@ -81,24 +81,28 @@ export interface GalleryImage {
 
 // ── Hero Background Images ────────────────────────────────────────────────────
 // Slideshow cycles through these in order. Add/remove/reorder freely.
+// ── Org logos shown in hero presenter row ────────────────────────────────────
+export const PRESENTER_LOGOS = [
+  { src: '/logo-ieee.png',  alt: 'IEEE IoBM Student Branch' },
+  { src: '/logo-ccsis.png', alt: 'College of Computer Science & Information Systems' },
+  { src: '/logo-iobm.png',  alt: 'Institute of Business Management' },
+] as const;
+
 export const HERO_BG_IMAGES = [
-  // Only high-res images (250KB+).
-  // mobilePosition: CSS object-position value — controls which part of the
-  // image stays visible on portrait mobile screens.
   {
-    src:            '/iobm-3.webp',
-    alt:            'IoBM College of Computer Science building',
-    mobilePosition: 'center top',    // keep building facade & signage in frame
+    src:            '/technova-25.jpg',
+    alt:            'TechNova 2025 closing ceremony group photo',
+    mobilePosition: 'center top',
   },
   {
     src:            '/iobm-2.webp',
     alt:            'IoBM students on campus',
-    mobilePosition: 'center 30%',    // keep students' faces in frame on portrait
+    mobilePosition: 'center 30%',
   },
 ] as const;
 
 export const META = {
-  siteName: "TechNova '26",
+  siteName: 'TechNova',
   siteNameShort: 'TechNova',
   tagline: 'Ignite. Innovate. Dominate.',
   description:
@@ -148,23 +152,24 @@ export const DEFAULT_THEME = 'fusion-dark';
 // ── Navbar ────────────────────────────────────────────────────────────────────
 
 export const NAV_LINKS: NavLink[] = [
-  { label: 'About', href: '#about' },
-  { label: 'Gallery', href: '#gallery' },
-  { label: 'Competitions', href: '#competitions' },
-  { label: 'Sponsors', href: '#sponsors' },
-  { label: 'Team', href: '#team' },
-  { label: 'Venue', href: '#location' },
+  { label: 'About',       href: '#about'      },
+  { label: 'Prizes',      href: '#prize-pool' },
+  { label: 'Gallery',     href: '#gallery'    },
+  { label: 'Competitions',href: '#competitions'},
+  { label: 'Sponsors',    href: '#sponsors'   },
+  { label: 'Team',        href: '#team'       },
+  { label: 'Venue',       href: '#location'   },
 ];
 
 export const NAV_CTA: NavLink = {
   label: 'Register Now',
-  href: '#location',
+  href: '/register',
 };
 
 // ── Hero ──────────────────────────────────────────────────────────────────────
 
 export const HERO = {
-  eyebrow: `${META.universityFull} Presents`,
+  presentsText: 'PRESENTS',
   headline: META.siteName,
   subheadline: META.tagline,
   body: META.description,
@@ -172,13 +177,8 @@ export const HERO = {
   ctaSecondary: { label: 'Learn More', href: '#about' },
   countdownLabel: 'Registration Closes In',
   countdownTarget: META.countdownTarget,
-  badge: META.edition,
-  stats: [
-    { value: '500+', label: 'Participants' },
-    { value: '48hrs', label: 'Of Hacking' },
-    { value: 'PKR 2L+', label: 'Prize Pool' },
-    { value: '12+', label: 'Competitions' },
-  ] satisfies Stat[],
+  badge: META.edition, // kept for data, not shown in hero
+  // Stats moved to About section — hero shows countdown only
 } as const;
 
 // ── About ─────────────────────────────────────────────────────────────────────
@@ -192,10 +192,12 @@ export const ABOUT = {
     "Backed by the Institute of Business Management, TechNova represents IoBM's commitment to bridging academia with the real world of technology and innovation.",
   ],
   stats: [
-    { value: '3rd', label: 'Annual Edition' },
-    { value: '20+', label: 'Industry Mentors' },
-    { value: '15+', label: 'Sponsoring Companies' },
+    { value: '500+',  label: 'Participants'       },
     { value: '48hrs', label: 'Non-stop Innovation' },
+    { value: '12+',   label: 'Competitions'        },
+    { value: '20+',   label: 'Industry Mentors'    },
+    { value: '15+',   label: 'Sponsoring Companies'},
+    { value: '3rd',   label: 'Annual Edition'      },
   ] satisfies Stat[],
   highlights: [
     {
@@ -234,10 +236,10 @@ export const GALLERY = {
   images: [
     {
       id: 'g-placeholder-1',
-      src: '',
-      alt: 'TechNova 2024 — Opening Ceremony',
-      year: "TechNova '24",
-      caption: 'Opening Ceremony',
+      src: '/technova-25.jpg',
+      alt: "TechNova '25 — Closing Ceremony",
+      year: "TechNova '25",
+      caption: 'Closing Ceremony',
     },
     {
       id: 'g-placeholder-2',
@@ -289,6 +291,21 @@ export const GALLERY = {
       caption: 'Demo Day',
     },
   ] satisfies GalleryImage[],
+} as const;
+
+// ── Prize Pool ───────────────────────────────────────────────────────────────
+
+export const PRIZE_POOL = {
+  eyebrow: 'Compete & Win',
+  heading: 'Total Prize Pool',
+  amount: 'Rs. 3,00,000+',
+  subtext: 'Across all competitions and categories',
+  note: 'Winners also receive internship referrals, mentorship sessions, and certificates of excellence.',
+  highlight: [
+    { label: 'Cash Prizes',          value: 'PKR 3,00,000+' },
+    { label: 'Competitions',         value: '12+'           },
+    { label: 'Winning Teams',        value: '20+'           },
+  ],
 } as const;
 
 // ── Competitions ──────────────────────────────────────────────────────────────
@@ -544,7 +561,7 @@ export const LOCATION = {
     heading: 'Ready to Make History?',
     body: 'Registrations are limited to 500 participants. Secure your spot before the deadline.',
     buttonLabel: 'Register Now — Free',
-    buttonHref: '#',
+    buttonHref: '/register',
     note: 'Registration is free for all IoBM students. External participants: PKR 500.',
   },
   details: [
@@ -559,7 +576,7 @@ export const LOCATION = {
 
 export const FOOTER = {
   tagline: 'Built by students. Powered by ambition.',
-  copyright: `© ${META.year} ${META.siteName} — ${META.universityFull}. All rights reserved.`,
+  copyright: `© ${META.year} TechNova — ${META.universityFull}. All rights reserved.`,
   links: [
     { label: 'Privacy Policy',  href: '#' },
     { label: 'Code of Conduct', href: '#' },
@@ -623,7 +640,7 @@ export interface ChartDataPoint {
 // ── Dashboard Meta ─────────────────────────────────────────────────────────
 
 export const DASHBOARD = {
-  title: "TechNova '26 — Admin Dashboard",
+  title: "TechNova — Admin Dashboard",
   welcomeMessage: "Welcome back, Organizer",
   eventName: META.siteName,
 
@@ -727,11 +744,56 @@ export const DASHBOARD = {
     heading: 'Announcements',
     subheading: 'Broadcast messages to participants, faculty, or sponsors',
     entries: [
-      { id: 'an-1', title: 'Registration Now Open!',        body: 'TechNova \'26 registrations are officially open. Head to the website and secure your spot.',                     audience: 'All',          sentAt: '2026-02-20', status: 'Sent'      },
-      { id: 'an-2', title: 'Sponsor Deck Available',        body: 'The official TechNova \'26 sponsorship deck is ready. Contact us to receive your copy.',                         audience: 'Sponsors',     sentAt: '2026-02-22', status: 'Sent'      },
+      { id: 'an-1', title: 'Registration Now Open!',        body: 'TechNova registrations are officially open. Head to the website and secure your spot.',                     audience: 'All',          sentAt: '2026-02-20', status: 'Sent'      },
+      { id: 'an-2', title: 'Sponsor Deck Available',        body: 'The official TechNova sponsorship deck is ready. Contact us to receive your copy.',                         audience: 'Sponsors',     sentAt: '2026-02-22', status: 'Sent'      },
       { id: 'an-3', title: 'DSA Practice Resources',        body: 'Brushing up for the DSA Throwdown? We\'ve compiled a resource list on our website.',                             audience: 'Participants', sentAt: '2026-02-25', status: 'Sent'      },
       { id: 'an-4', title: 'Faculty Briefing — March 1',    body: 'A briefing session for all faculty advisors is scheduled for March 1st at 3:00 PM in Room 204.',                 audience: 'Faculty',      sentAt: '2026-03-01', status: 'Scheduled' },
       { id: 'an-5', title: 'Final Reminder — 1 Week Left',  body: 'One week to go! Make sure your team is registered and all submissions are in order.',                            audience: 'All',          sentAt: '',           status: 'Draft'     },
     ] as Announcement[],
+  },
+} as const;
+
+// ─────────────────────────────────────────────────────────────────────────────
+// REGISTRATION FORM DATA
+// ─────────────────────────────────────────────────────────────────────────────
+
+export const REGISTRATION = {
+  pageTitle:    'Register for TechNova',
+  pageSubtitle: 'Secure your spot. Limited to 500 participants.',
+
+  // ── How did you hear about us options ──────────────────────────────────────
+  referralOptions: [
+    'Social Media (Instagram / Facebook)',
+    'LinkedIn',
+    'University Notice Board',
+    'Friend / Classmate',
+    'Faculty Member',
+    'Previous TechNova Attendee',
+    'Other',
+  ],
+
+  // ── Competition categories — populated when backend is ready ───────────────
+  // To add categories: append strings to this array in site-data.ts
+  competitionCategories: [
+    // 'DSA Throwdown',
+    // '48-Hour Build Sprint',
+    // 'UX Design Sprint',
+    // Add real categories here when backend is ready
+  ] as string[],
+
+  // ── Team size options ──────────────────────────────────────────────────────
+  teamSizeOptions: ['1', '2', '3', '4', '5'],
+
+  // ── Success modal ──────────────────────────────────────────────────────────
+  successTitle:   'You\'re Registered!',
+  successBody:    'Welcome to TechNova. We\'ve received your registration and will send a confirmation to your email shortly.',
+  successCta:     'Back to Home',
+
+  // ── Validation messages ────────────────────────────────────────────────────
+  validation: {
+    required:     'This field is required',
+    emailInvalid: 'Please enter a valid email address',
+    phoneInvalid: 'Please enter a valid phone number',
+    cnicInvalid:  'Please enter a valid CNIC (e.g. 42101-1234567-1)',
   },
 } as const;

@@ -148,7 +148,7 @@ export function DashboardShell({ children, activeSection, onSectionChange }: Das
               <h1 className="font-semibold text-sm capitalize" style={{ color: 'var(--text-primary)' }}>
                 {NAV_ITEMS.find(n => n.id === activeSection)?.label ?? 'Dashboard'}
               </h1>
-              <p className="mono text-xs" style={{ color: 'var(--text-subtle)' }}>TechNova &apos;26 Admin</p>
+              <p className="mono text-xs" style={{ color: 'var(--text-subtle)' }}>TechNova Admin</p>
             </div>
           </div>
           <ThemeToggle themes={THEMES} />
